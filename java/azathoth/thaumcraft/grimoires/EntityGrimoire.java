@@ -24,8 +24,10 @@ public class EntityGrimoire extends EntityTameable {
 		super(world);
 		FMLLog.info("EntityGrimoire(World)");
 		this.setSize(0.75F, 1F);
-		this.getNavigator().setAvoidsWater(true);
-		this.isImmuneToFire = false;
+		if (this.grimoireType == EnumGrimoire.None)
+			this.getNavigator().setAvoidsWater(true);
+		if (this.grimoireType == EnumGrimoire.None)
+			this.isImmuneToFire = false;
 		this.tasks.addTask(0, new EntityAISwimming(this));
 		this.tasks.addTask(1, new EntityAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
 		this.tasks.addTask(2, new EntityAIWander(this, 0.25F));
