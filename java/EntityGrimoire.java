@@ -11,6 +11,7 @@ import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
 import cpw.mods.fml.common.FMLLog;
@@ -18,11 +19,8 @@ import cpw.mods.fml.common.FMLLog;
 
 public class EntityGrimoire extends EntityTameable {
 
-	public EnumGrimoire grimoireType = EnumGrimoire.None;
-
 	public EntityGrimoire(World world) {
 		super(world);
-		FMLLog.info("EntityGrimoire(World)");
 		this.setSize(0.75F, 1F);
 		this.getNavigator().setAvoidsWater(true);
 		this.isImmuneToFire = false;
@@ -37,15 +35,11 @@ public class EntityGrimoire extends EntityTameable {
 	public EntityGrimoire(World world, EnumGrimoire grimoireType) {
 		super(world);
 
-		this.grimoireType = grimoireType;
-
-		FMLLog.info("Creating EntityGrimoire of type %s", this.grimoireType);
-
 		this.setSize(0.75F, 1F);
 
-		this.getNavigator().setAvoidsWater(this.grimoireType != EnumGrimoire.Aqua);
+		this.getNavigator().setAvoidsWater(true);
 
-		this.isImmuneToFire = (this.grimoireType == EnumGrimoire.Ignis);
+		this.isImmuneToFire = (false);
 
 		this.tasks.addTask(0, new EntityAISwimming(this));
 		this.tasks.addTask(1, new EntityAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
@@ -55,6 +49,19 @@ public class EntityGrimoire extends EntityTameable {
 
 		this.setTamed(false);
 
+	}
+
+	protected void entityInit() {
+		super.entityInit();
+		this.getDataWatcher().addObject(18, Byte.valueOf((byte) 0));
+	}
+
+	public byte getGrimoireType() {
+		return this.getDataWatcher().getWatchableObjectByte(18);
+	}
+
+	public void setGrimoireType(byte type) {
+		this.getDataWatcher().updateObject(18, Byte.valueOf(type));
 	}
 
 	protected boolean isAIEnabled() {
@@ -117,6 +124,16 @@ public class EntityGrimoire extends EntityTameable {
 			this.playTameEffect(true);
 			this.worldObj.setEntityState(this, (byte) 7);
 		}
+	}
+
+	public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound) {
+		super.writeEntityToNBT(par1NBTTagCompound);
+		par1NBTTagCompound.setByte("GrimoireType", this.getGrimoireType());
+	}
+
+	public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound) {
+		super.readEntityFromNBT(par1NBTTagCompound);
+		this.setGrimoireType(par1NBTTagCompound.getByte("GrimoireType"));
 	}
 
 }

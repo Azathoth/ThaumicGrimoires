@@ -94,7 +94,7 @@ public class ItemGrimoire extends Item {
 
 	public EntityGrimoire spawnGrimoire(World par0World, double par2, double par4, double par6) {
 
-		EntityGrimoire entity = new EntityGrimoire(par0World, EnumGrimoire.None);
+		EntityGrimoire entity = new EntityGrimoire(par0World);
 
 		if (entity != null) {
 			entity.setLocationAndAngles(par2, par4, par6, MathHelper.wrapAngleTo180_float(par0World.rand.nextFloat() * 360.0F), 0.0F);

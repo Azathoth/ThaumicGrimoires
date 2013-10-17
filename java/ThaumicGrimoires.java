@@ -47,7 +47,7 @@ public class ThaumicGrimoires {
 		LanguageRegistry.addName(grimoireAer, "Grimoire Aer");
 		LanguageRegistry.addName(grimoireTerra, "Grimoire Terra");
 
-		//EntityRegistry.registerModEntity(EntityGrimoire.class, "grimoireBase", 2, this, 80, 3, true);
+		EntityRegistry.registerModEntity(EntityGrimoire.class, "grimoireBase", 2, this, 80, 3, true);
 		proxy.registerRenderers();
 		//LanguageRegistry.instance().addStringLocalization("entity.instance.grimoireBase.name", "Grimoire Nullos");
 	}

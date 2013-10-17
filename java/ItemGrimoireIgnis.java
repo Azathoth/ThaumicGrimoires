@@ -16,7 +16,8 @@ public class ItemGrimoireIgnis extends ItemGrimoire {
 
 	@Override
 	public EntityGrimoire spawnGrimoire(World par0World, double par2, double par4, double par6) {
-		EntityGrimoire entity = new EntityGrimoire(par0World, EnumGrimoire.Ignis);
+		EntityGrimoire entity = new EntityGrimoire(par0World);
+		entity.setGrimoireType((byte) 3);
 
 		if (entity != null) {
 			entity.setLocationAndAngles(par2, par4, par6, MathHelper.wrapAngleTo180_float(par0World.rand.nextFloat() * 360.0F), 0.0F);

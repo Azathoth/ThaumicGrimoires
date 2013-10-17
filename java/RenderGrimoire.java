@@ -37,30 +37,17 @@ public class RenderGrimoire extends RenderLiving {
 	}
 
 	public ResourceLocation getEntityTexture(Entity entity) {
-//		switch(((EntityGrimoire) entity).grimoireType) {
-//			case Aer:
-//				FMLLog.info("Selected texture %s for EntityGrimoire %s", ((EntityGrimoire) entity).grimoireType, entity);
-//				return this.aer;
-//			case Aqua:
-//				FMLLog.info("Selected texture %s for EntityGrimoire %s", ((EntityGrimoire) entity).grimoireType, entity);
-//				return this.aqua;
-//			case Ignis:
-//				FMLLog.info("Selected texture %s for EntityGrimoire %s", ((EntityGrimoire) entity).grimoireType, entity);
-//				return this.ignis;
-//			case Terra:
-//				FMLLog.info("Selected texture %s for EntityGrimoire %s", ((EntityGrimoire) entity).grimoireType, entity);
-//				return this.terra;
-//			default:
-//				FMLLog.info("Selected texture %s for EntityGrimoire %s", ((EntityGrimoire) entity).grimoireType, entity);
-//				return this.none;
-//		}
-		EnumGrimoire type = ((EntityGrimoire) entity).grimoireType;
-
-		if (type == EnumGrimoire.Aer) {
-			return this.aer;
-		}
-		else {
-			return this.none;
+		switch (((EntityGrimoire) entity).getGrimoireType()) {
+			case 1:
+				return this.aer;
+			case 2:
+				return this.aqua;
+			case 3:
+				return this.ignis;
+			case 4:
+				return this.terra;
+			default:
+				return this.none;
 		}
 	}
 }
