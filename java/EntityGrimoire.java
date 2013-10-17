@@ -56,6 +56,8 @@ public class EntityGrimoire extends EntityTameable {
 			case 3:
 				this.isImmuneToFire = true;
 				break;
+			case 4:
+				this.setHealth(30.0F);
 			default:
 		}
 	}
@@ -88,8 +90,16 @@ public class EntityGrimoire extends EntityTameable {
 	@Override
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(20.0D);
-		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.8F);
+
+		if (this.getGrimoireType() == (byte) 4)
+			this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(30.0D);
+		else
+			this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(20.0D);
+
+		if (this.getGrimoireType() == (byte) 1)
+			this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.9D);
+		else
+			this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.4D);
 	}
 
 	@Override

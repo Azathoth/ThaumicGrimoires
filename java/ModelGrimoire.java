@@ -19,17 +19,13 @@ public class ModelGrimoire extends ModelBase
     ModelRenderer spine;
     ModelRenderer front_page_block;
     ModelRenderer back_page_block;
-    ModelRenderer page1;
-    ModelRenderer page2;
-    ModelRenderer page3;
-    ModelRenderer page4;
-    ModelRenderer page5;
-  
+    ModelRenderer[] pages;
+
   public ModelGrimoire()
   {
     textureWidth = 64;
     textureHeight = 32;
-    
+
 		spine = new ModelRenderer(this, 20, 0);
 		spine.addBox(0F, -5F, -1F, 1, 12, 2);
 		spine.setRotationPoint(-5F, 8F, 0F);
@@ -65,52 +61,27 @@ public class ModelGrimoire extends ModelBase
 		back_page_block.mirror = true;
 		setRotation(back_page_block, 0F, 0F, 0F);
 
-		page1 = new ModelRenderer(this, 50, 21);
-		page1.addBox(0F, -5.5F, 0F, 7, 11, 0);
-		page1.setRotationPoint(1F, 1F, 0F);
-		page1.setTextureSize(64, 32);
-		page1.mirror = true;
-		setRotation(page1, 0F, 0F, 0F);
+		pages = new ModelRenderer[5];
 
-		page2 = new ModelRenderer(this, 50, 21);
-		page2.addBox(0F, -5.5F, 0F, 7, 11, 0);
-		page2.setRotationPoint(1F, 1F, 0F);
-		page2.setTextureSize(64, 32);
-		page2.mirror = true;
-		setRotation(page2, 0F, 0F, 0F);
-
-		page3 = new ModelRenderer(this, 50, 21);
-		page3.addBox(0F, -5.5F, 0F, 7, 11, 0);
-		page3.setRotationPoint(1F, 1F, 0F);
-		page3.setTextureSize(64, 32);
-		page3.mirror = true;
-		setRotation(page3, 0F, 0F, 0F);
-
-		page4 = new ModelRenderer(this, 50, 21);
-		page4.addBox(0F, -5.5F, 0F, 7, 11, 0);
-		page4.setRotationPoint(1F, 1F, 0F);
-		page4.setTextureSize(64, 32);
-		page4.mirror = true;
-		setRotation(page4, 0F, 0F, 0F);
-
-		page5 = new ModelRenderer(this, 50, 21);
-		page5.addBox(0F, -5.5F, 0F, 7, 11, 0);
-		page5.setRotationPoint(1F, 1F, 0F);
-		page5.setTextureSize(64, 32);
-		page5.mirror = true;
-		setRotation(page5, 0F, 0F, 0F);
+		for (int i = 0; i < 5; i++){
+			pages[i] = new ModelRenderer(this, 50, 21);
+			pages[i].addBox(0F, -5.5F, 0F, 7, 11, 0);
+			pages[i].setRotationPoint(1F, 1F, 0F);
+			pages[i].setTextureSize(64, 32);
+			pages[i].mirror = true;
+			setRotation(pages[i], 0F, 0F, 0F);
+		}
 
 		spine.addChild(front_cover);
 		spine.addChild(back_cover);
 		spine.addChild(front_page_block);
 		spine.addChild(back_page_block);
-		spine.addChild(page1);
-		spine.addChild(page2);
-		spine.addChild(page3);
-		spine.addChild(page4);
-		spine.addChild(page5);
+
+		for (int i = 0; i < 5; i++){
+			spine.addChild(pages[i]);
+		}
   }
-  
+
 	@Override
   public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
   {
@@ -120,14 +91,15 @@ public class ModelGrimoire extends ModelBase
 
     spine.render(f5);
   }
-  
+
   private void setRotation(ModelRenderer model, float x, float y, float z)
   {
     model.rotateAngleX = x;
     model.rotateAngleY = y;
     model.rotateAngleZ = z;
   }
-  
+
+	// setRotationAngles(time, speed, rotation, yaw, pitch, scale, entity)5
 	@Override
   public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity)
   {
@@ -137,12 +109,8 @@ public class ModelGrimoire extends ModelBase
 		this.back_cover.rotateAngleY = -0.8F * f1;
 		this.back_page_block.rotateAngleY = this.back_cover.rotateAngleY;
 
-		this.page1.rotateAngleY = back_cover.rotateAngleY * MathHelper.abs(MathHelper.sin((f * f1 * 0.3F) + ((1/5) * back_cover.rotateAngleY)));
-		this.page2.rotateAngleY = back_cover.rotateAngleY * MathHelper.abs(MathHelper.sin((f * f1 * 0.3F) + ((2/5) * back_cover.rotateAngleY)));
-		this.page3.rotateAngleY = back_cover.rotateAngleY * MathHelper.abs(MathHelper.sin((f * f1 * 0.3F) + ((3/5) * back_cover.rotateAngleY)));
-		this.page4.rotateAngleY = back_cover.rotateAngleY * MathHelper.abs(MathHelper.sin((f * f1 * 0.3F) + ((4/5) * back_cover.rotateAngleY)));
-		this.page5.rotateAngleY = back_cover.rotateAngleY * MathHelper.abs(MathHelper.sin((f * f1 * 0.3F) + back_cover.rotateAngleY));
-	
+		this.pages[1].rotateAngleY = -1.0F * ((f * f1 * 0.2F) % this.back_cover.rotateAngleY);
+		this.pages[2].rotateAngleY = -1.0F * (((f * f1 * 0.2F) + 0.5F*this.back_cover.rotateAngleY) % this.back_cover.rotateAngleY);
   }
 
 }
