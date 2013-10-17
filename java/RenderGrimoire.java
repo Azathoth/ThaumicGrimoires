@@ -28,14 +28,17 @@ public class RenderGrimoire extends RenderLiving {
 		super.doRenderLiving(par1EntityGrimoire, par2, par4, par6, par8, par9);
 	}
 
+	@Override
 	public void doRenderLiving(EntityLiving par1EntityLiving, double par2, double par4, double par6, float par8, float par9) {
 		this.renderGrimoire((EntityGrimoire) par1EntityLiving, par2, par4, par6, par8, par9);
 	}
 
+	@Override
 	public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9) {
 		this.renderGrimoire((EntityGrimoire) par1Entity, par2, par4, par6, par8, par9);
 	}
 
+	@Override
 	public ResourceLocation getEntityTexture(Entity entity) {
 		switch (((EntityGrimoire) entity).getGrimoireType()) {
 			case 1:
