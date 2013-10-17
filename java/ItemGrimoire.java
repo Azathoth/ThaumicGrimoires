@@ -18,12 +18,24 @@ import cpw.mods.fml.common.FMLLog;
 
 public class ItemGrimoire extends Item {
 
+	private byte grimoireType;
+
 	public ItemGrimoire(int id) {
 		super(id);
 
-		maxStackSize = 1;
-		setCreativeTab(CreativeTabs.tabMisc);
-		setTextureName("thaumicgrimoires:grimoireNix");
+		this.maxStackSize = 1;
+		this.setCreativeTab(CreativeTabs.tabMisc);
+		this.setTextureName("thaumicgrimoires:grimoireNix");
+		this.setGrimoireType((byte) 0);
+	}
+
+	public ItemGrimoire setGrimoireType(byte type) {
+		this.grimoireType = type;
+		return this;
+	}
+
+	public byte getGrimoireType() {
+		return this.grimoireType;
 	}
 
 	public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10) {
@@ -95,6 +107,7 @@ public class ItemGrimoire extends Item {
 	public EntityGrimoire spawnGrimoire(World par0World, double par2, double par4, double par6) {
 
 		EntityGrimoire entity = new EntityGrimoire(par0World);
+		entity.setGrimoireType(this.getGrimoireType());
 
 		if (entity != null) {
 			entity.setLocationAndAngles(par2, par4, par6, MathHelper.wrapAngleTo180_float(par0World.rand.nextFloat() * 360.0F), 0.0F);

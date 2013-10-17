@@ -33,10 +33,10 @@ public class ThaumicGrimoires {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		grimoireNix = new ItemGrimoire(5000).setUnlocalizedName("grimoreNix");
-		grimoireIgnis = new ItemGrimoireIgnis(5001).setUnlocalizedName("grimoireIgnis");
-		grimoireAqua = new ItemGrimoireAqua(5002).setUnlocalizedName("grimoireAqua");
-		grimoireAer = new ItemGrimoireAer(5003).setUnlocalizedName("grimoireAer");
-		grimoireTerra = new ItemGrimoireTerra(5004).setUnlocalizedName("grimoireTerra");
+		grimoireAer = new ItemGrimoire(5001).setGrimoireType((byte) 1).setTextureName("thaumicgrimoires:grimoireAer").setUnlocalizedName("grimoireAer");
+		grimoireAqua = new ItemGrimoire(5002).setGrimoireType((byte) 2).setTextureName("thaumicgrimoires:grimoireAqua").setUnlocalizedName("grimoireAqua");
+		grimoireIgnis = new ItemGrimoire(5003).setGrimoireType((byte) 3).setTextureName("thaumicgrimoires:grimoireIgnis").setUnlocalizedName("grimoireIgnis");
+		grimoireTerra = new ItemGrimoire(5004).setGrimoireType((byte) 4).setTextureName("thaumicgrimoires:grimoireTerra").setUnlocalizedName("grimoireTerra");
 	}
 
 	@EventHandler
