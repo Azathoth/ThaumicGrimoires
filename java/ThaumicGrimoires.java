@@ -21,11 +21,11 @@ public class ThaumicGrimoires {
 	@Instance(value = "ThaumicGrimoires")
 	public static ThaumicGrimoires instance;
 
-	private static Item grimoireNix;
-	private static Item grimoireIgnis;
-	private static Item grimoireAqua;
-	private static Item grimoireAer;
-	private static Item grimoireTerra;
+	public static Item grimoireNix;
+	public static Item grimoireIgnis;
+	public static Item grimoireAqua;
+	public static Item grimoireAer;
+	public static Item grimoireTerra;
 
 	@SidedProxy(clientSide="azathoth.thaumcraft.grimoires.ClientProxy", serverSide="azathoth.thaumcraft.grimoires.CommonProxy")
 	public static CommonProxy proxy;

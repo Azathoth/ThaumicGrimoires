@@ -15,6 +15,8 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
+import java.util.Random;
+
 import cpw.mods.fml.common.FMLLog;
 
 
@@ -50,14 +52,14 @@ public class EntityGrimoire extends EntityTameable {
 
 	private void updateGrimoireCapabilities() {
 		switch(this.getGrimoireType()) {
+			case 1:
+				this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.7D);
 			case 2:
 				this.getNavigator().setAvoidsWater(false);
 				break;
 			case 3:
 				this.isImmuneToFire = true;
 				break;
-			case 4:
-				this.setHealth(30.0F);
 			default:
 		}
 	}
@@ -90,16 +92,8 @@ public class EntityGrimoire extends EntityTameable {
 	@Override
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
-
-		if (this.getGrimoireType() == (byte) 4)
-			this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(30.0D);
-		else
-			this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(20.0D);
-
-		if (this.getGrimoireType() == (byte) 1)
-			this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.9D);
-		else
-			this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.4D);
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(20.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.4D);
 	}
 
 	@Override
@@ -133,10 +127,60 @@ public class EntityGrimoire extends EntityTameable {
 	}
 
 	@Override
+	public boolean interact(EntityPlayer par1EntityPlayer) {
+		ItemStack itemStack = par1EntityPlayer.inventory.getCurrentItem();
+
+		if (this.isTamed()) {
+			if (itemStack != null) {
+				if (itemStack.itemID == Item.paper.itemID && this.getHealth() < 20.0F) {
+					if (!par1EntityPlayer.capabilities.isCreativeMode)
+						--itemStack.stackSize;
+					this.heal(1.0F);
+					if (itemStack.stackSize <= 0)
+						par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack) null);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	@Override
 	public void onLivingUpdate() {
-		if (this.isWet() && (this.getGrimoireType() != (byte) 2))
-			this.attackEntityFrom(DamageSource.drown, 1.0F);
+		if (this.isWet() && (this.getGrimoireType() != (byte) 2)) {
+			if (this.worldObj.rand.nextInt(50) == 0) {
+				this.attackEntityFrom(DamageSource.drown, 1.0F);
+			}
+		}
 		super.onLivingUpdate();
+	}
+
+	@Override
+	protected void dropFewItems(boolean par1, int par2) {
+		Item grimoire;
+		switch((int) this.getGrimoireType()) {
+			case 1:
+				grimoire = ThaumicGrimoires.grimoireAer;
+				break;
+			case 2:
+				grimoire = ThaumicGrimoires.grimoireAqua;
+				break;
+			case 3:
+				grimoire = ThaumicGrimoires.grimoireIgnis;
+				break;
+			case 4:
+				grimoire = ThaumicGrimoires.grimoireTerra;
+				break;
+			default:
+				grimoire = ThaumicGrimoires.grimoireNix;
+		}
+
+		this.entityDropItem(new ItemStack(grimoire, 1), 0.0F);
+	}
+
+	@Override
+	protected int getDropItemId() {
+		return 0;
 	}
 
 	public void becomeTame(EntityPlayer p) {
@@ -146,6 +190,11 @@ public class EntityGrimoire extends EntityTameable {
 			this.playTameEffect(true);
 			this.worldObj.setEntityState(this, (byte) 7);
 		}
+	}
+
+	@Override
+	protected int getExperiencePoints(EntityPlayer par1EntityPlayer) {
+		return 0;
 	}
 
 	@Override
